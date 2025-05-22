@@ -20,7 +20,7 @@ public class SlidingBlocksPI extends JPanel implements Runnable{
 	int m1, m2;
 	int s1, s2;
 	
-	float x1, y1, x2, y2;
+	float x1, y1, x2, y2; //position of the 2 blocks
 	float v1, v2;
 	int collisionCount = 0;
 	
