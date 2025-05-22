@@ -54,7 +54,7 @@ public class SlidingBlocksPI extends JPanel implements Runnable{
 	}
 	
 	public void init() {
-		System.out.println(getWidth()+" "+getHeight());
+		
 		x1 = getWidth()/2;
 		y1 = getHeight()-s1;
 		
