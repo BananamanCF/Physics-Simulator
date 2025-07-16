@@ -16,6 +16,7 @@ import Simulations.Drop;
 import Simulations.KeyClass;
 import Simulations.MultipleBallPM;
 import Simulations.ProjectileMotion;
+import Simulations.Sand;
 import Simulations.SlidingBlocksPI;
 
 public class Menu extends JPanel implements Runnable{
@@ -33,7 +34,7 @@ public class Menu extends JPanel implements Runnable{
 	
 	
 	public void run() {
-		this.setBackground(Color.YELLOW);
+		this.setBackground(Color.BLACK);
 		this.setLayout(null);
 		this.setFocusable(true);
 		this.requestFocusInWindow();
@@ -59,12 +60,16 @@ public class Menu extends JPanel implements Runnable{
 	    button3.addActionListener(e -> dropBall(frame, 100, 50));
 	    
 	    JButton button4 = createButton((int)(width + width * 3.5), (int)(height * 4.5), "Projectile Motion");
-	    button4.addActionListener(e -> shootBall(frame, 200, 45, 200));
+	    button4.addActionListener(e -> shootBall(frame, 25 , 45, 20)); //speed, angle deg, size
+	    
+	    JButton button5 = createButton((int)(width + width * .5), (int)(height * 6.5), "Sand");
+	    button5.addActionListener(e -> dropSand(frame)); //speed, angle deg, size
 	    
 	    this.add(button1);
 	    this.add(button2);
 	    this.add(button3);
 	    this.add(button4);
+	    this.add(button5);
 	    
 	    this.repaint();
         
@@ -73,7 +78,7 @@ public class Menu extends JPanel implements Runnable{
 		super.paintComponent(graphics);
 		
 		Graphics2D g = (Graphics2D) (graphics);
-		g.setColor(Color.RED);
+		g.setColor(Color.WHITE);
 		Font font = new Font("Arial", Font.BOLD, (int) (.05 * getHeight()));
 		g.setFont(font);
 		
@@ -152,6 +157,28 @@ public class Menu extends JPanel implements Runnable{
 	    sb.init();
 		
 		new Thread(sb).start();
+	}
+	public void dropSand(JFrame fram) {
+		frame.getContentPane().removeAll();
+		Sand sand = new Sand(frame, this);
+		Color col = new Color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+		
+		for(int i=0;i<2000;i++) {
+			int r = 3;
+			float x = (float) (Math.random()*(WIDTH-r) + r);
+			float y = (float) (Math.random()*(HEIGHT-r) + r);
+			double angle = Math.random() * 180;
+			int speed = (int) (Math.random() * 1);
+			
+			sand.addBall(x, y, r, angle, speed, col);
+		}
+		
+		frame.add(sand);
+		
+		frame.revalidate();
+		frame.repaint();
+		
+		new Thread(sand).start();
 	}
 
 }
